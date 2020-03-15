@@ -12,6 +12,7 @@
 * `fish`
   * `functions`
     * `portainer` - start/restart/install [portainer][portainer]
+    * `take` - create a directory and cd into it
   * `config` - settings for done notifications, path, load [thefuck][thefuck],
     hack `pure` theme.
   * `fishfile` - list of plugins
