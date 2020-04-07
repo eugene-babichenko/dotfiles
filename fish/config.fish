@@ -12,7 +12,7 @@ set -g pure_color_mute (set_color bryellow)
 set -g __done_min_cmd_duration 15000
 
 # Rust things
-set -gx PATH $PATH $HOME/.cargo/bin
+set -gx PATH $HOME/.cargo/bin $HOME/.jorup/bin $PATH
 
 if type -q thefuck
     thefuck --alias | source

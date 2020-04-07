@@ -1,0 +1,11 @@
+[user]
+	name = Yevhenii Babichenko
+	email = eugene.babichenko@protonmail.com
+	signingkey = 629C709FF265CDF4
+
+[core]
+	autocrlf = input
+	editor = nvim
+
+[commit]
+	gpgsign = true
