@@ -5,14 +5,19 @@ if not functions -q fisher
     fish -c fisher
 end
 
-# for compatibility with iTerm2 Solarized Dark
-set -g pure_color_mute (set_color bryellow)
+if test $TERM_PROGRAM = iTerm.app
+    # for compatibility with iTerm2 Solarized Dark
+    set -g pure_color_mute (set_color bryellow)
+end
 
 # notify when a command ran for 15 seconds
 set -g __done_min_cmd_duration 15000
 
 # Rust things
 set -gx PATH $HOME/.cargo/bin $HOME/.jorup/bin $PATH
+
+# Make GnuPG work correctly
+set -gx GPG_TTY (tty)
 
 if type -q thefuck
     thefuck --alias | source
