@@ -1,5 +1,14 @@
 #!/usr/bin/env sh
 
+# exit on failure inside pipes (might be unavailable on some shells)
+set -o | grep 'pipefail' > /dev/null
+if [ $? -eq 0 ]; then
+  set -o pipefail
+fi
+
+# exit on failure
+set -e
+
 symlink() {
     if [ ! -L "$2" ] && [ -n $DOTFILES_BACKUP ]; then
         backup "$2"

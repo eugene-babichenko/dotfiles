@@ -10,12 +10,12 @@ DESTINATION="$(realpath ~/.config/fish)"
 
 echo "setting up fish..."
 
-mkdir -p "$FISH_CONFIG_DIR"
-remove_broken_symlinks "$FISH_CONFIG_DIR"
+mkdir -p "$DESTINATION"
+remove_broken_symlinks "$DESTINATION"
 find * -name "*.fish" -o -name "fishfile" | while read fn; do
     symlink "$SOURCE/$fn" "$DESTINATION/$fn"
 done
 
-chsh -s $(which fish)
+sudo chsh -s $(which fish)
 
-fish "$DESTINATION/config.sh"
+fish "$DESTINATION/config.fish"

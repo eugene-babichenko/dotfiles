@@ -10,5 +10,5 @@ DESTINATION="$(realpath ~)"
 
 echo "setting up git..."
 
-symlink "$SOURCE/git/.gitconfig" "$DESTINATION/.gitconfig"
+symlink "$SOURCE/.gitconfig" "$DESTINATION/.gitconfig"
 
