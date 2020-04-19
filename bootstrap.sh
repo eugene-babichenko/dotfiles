@@ -6,7 +6,7 @@ cd "$DIR"
 . ./scripts/functions.sh
 
 find * -name "setup.sh" | while read setup; do
-    ./$setup
+	./$setup
 done
 
 echo "done!"

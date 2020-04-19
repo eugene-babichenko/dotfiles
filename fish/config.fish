@@ -1,8 +1,8 @@
 # install fisher and plugins if not installed
 if not functions -q fisher
-    set -q XDG_CONFIG_HOME; or set XDG_CONFIG_HOME ~/.config
-    curl https://git.io/fisher --create-dirs -sLo $XDG_CONFIG_HOME/fish/functions/fisher.fish
-    fish -c fisher
+	set -q XDG_CONFIG_HOME; or set XDG_CONFIG_HOME ~/.config
+	curl https://git.io/fisher --create-dirs -sLo $XDG_CONFIG_HOME/fish/functions/fisher.fish
+	fish -c fisher
 end
 
 # for compatibility with Solarized Dark
@@ -20,5 +20,5 @@ set -gx PATH $HOME/.local/bin $PATH
 set -gx GPG_TTY (tty)
 
 if type -q thefuck
-    thefuck --alias | source
+	thefuck --alias | source
 end
