@@ -6,6 +6,7 @@
 * vim
 * fish
 * thefuck
+* starship
 
 ## Contents
 
