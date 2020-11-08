@@ -39,6 +39,13 @@ No plugins, just some convenience settings.
 
 Some beautification.
 
+New key bindings:
+
+* `M-[hjkl]` is for pane navigation (vim-like movements).
+* `M-[HJKL]` is for resizing a pane.
+* `C-b h` and `C-b v` make horizontal and vertical splits respectively.
+* `C-b r` reloads `~/.tmux.conf`.
+
 ## Installation
 
 Run `./bootstrap.sh`. All configuration files will be symlinked in their places and backups of old configurations
