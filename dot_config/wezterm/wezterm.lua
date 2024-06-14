@@ -15,44 +15,88 @@ config.initial_rows = 36
 
 config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
 
-local ACTIVE_TITLEBAR_BG = "#333333"
-
 config.window_frame = {
   font = wezterm.font({ family = font, weight = "Bold" }),
   font_size = 13,
-  active_titlebar_bg = ACTIVE_TITLEBAR_BG,
 }
 
 config.status_update_interval = 1000
 
 local act = wezterm.action
-local keys = {
+config.keys = {
   {
     key = "p",
     mods = "SUPER",
-    action = act.PaneSelect({ alphabet = "1234567890" }),
+    action = act.PaneSelect({}),
+  },
+  {
+    key = "UpArrow",
+    mods = "SHIFT",
+    action = wezterm.action.ScrollToPrompt(-1),
+  },
+  {
+    key = "DownArrow",
+    mods = "SHIFT",
+    action = wezterm.action.ScrollToPrompt(1),
   },
   -- Open config in the default system editor with Cmd+, (the Apple way)
   {
     key = ",",
     mods = "SUPER",
+    domain = { DomainName = "local" },
     action = act.SpawnCommandInNewTab({
       cwd = os.getenv("WEZTERM_CONFIG_DIR"),
       args = { os.getenv("SHELL"), "-c", "$EDITOR $WEZTERM_CONFIG_FILE" },
     }),
   },
+  -- Open the default editor
+  {
+    key = "e",
+    mods = "SUPER",
+    action = act.SendString("$EDITOR\n"),
+  },
+  -- Move tab right
+  {
+    key = "RightArrow",
+    mods = "SUPER|ALT",
+    action = act.MoveTabRelative(1),
+  },
+  -- Move tab left
+  {
+    key = "LeftArrow",
+    mods = "SUPER|ALT",
+    action = act.MoveTabRelative(-1),
+  },
+}
+
+config.mouse_bindings = {
+  {
+    event = { Up = { streak = 1, button = "Left" } },
+    mods = "NONE",
+    action = act.CompleteSelection("PrimarySelection"),
+  },
+  {
+    event = { Up = { streak = 1, button = "Left" } },
+    mods = "SUPER",
+    action = act.OpenLinkAtMouseCursor,
+  },
+  {
+    event = { Up = { streak = 2, button = "Left" } },
+    action = wezterm.action.SelectTextAtMouseCursor("SemanticZone"),
+    mods = "ALT",
+  },
 }
 
 -- Press Super+Arrow to open a new pane in the direction of arrow
 for _, direction in pairs({ "Up", "Down", "Left", "Right" }) do
-  table.insert(keys, {
+  table.insert(config.keys, {
     key = string.format("%sArrow", direction),
     mods = "SUPER",
     action = act.SplitPane({ direction = direction }),
   })
 end
 
-config.keys = keys
+local ACTIVE_TITLEBAR_BG = "#333333"
 
 -- status bar for full screen operation
 wezterm.on("update-right-status", function(window, _)
@@ -69,8 +113,9 @@ wezterm.on("update-right-status", function(window, _)
       Charging = { icon = nerd.md_battery_charging, color = "#b8bb26" },
       Discharging = { icon = nerd.md_battery_50, color = "#fabd2f" },
       Empty = { icon = nerd.md_battery_outline, color = "#fb4934" },
-      Full = { icon = nerd.md_battery, color = "#b8bb26" },
-      Unknown = { icon = nerd.md_battery_alert, color = "#cc241d" },
+      -- full indicates the battery is charged and the device is using external power
+      Full = { icon = nerd.md_battery_charging, color = "#b8bb26" },
+      Unknown = { icon = nerd.md_battery_unknown, color = "#cc241d" },
     }
 
     local icon = BATTERY_ICONS[battery.state]
@@ -97,7 +142,7 @@ wezterm.on("update-right-status", function(window, _)
   table.insert(elems, { Foreground = { Color = ACTIVE_TITLEBAR_BG } })
   table.insert(elems, { Text = " " })
   table.insert(elems, { Text = nerd.md_clock })
-  table.insert(elems, { Text = wezterm.strftime(" %a %b %-d %H:%M ") })
+  table.insert(elems, { Text = wezterm.strftime("  %a %b %-d %H:%M ") })
 
   window:set_right_status(wezterm.format(elems))
 end)
