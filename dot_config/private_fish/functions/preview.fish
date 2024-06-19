@@ -1,7 +1,10 @@
-function fzf_preview -a "filename"
+function preview -a "filename"
+	set -l ext (path extension "$filename")
 	set -l mimetype "$(file --dereference --mime-type "$filename")"
-	set -l columns (math "round($FZF_PREVIEW_COLUMNS * 0.7)")
-	set -l lines (math "round($FZF_PREVIEW_LINES * 0.5)")
+	if [ "$ext" = ".md" ]
+		glow --style dark "$filename"
+		return
+	end
 	switch "$mimetype"
 		case "*directory*"
 			tree -C -L 1 "$filename"

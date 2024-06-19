@@ -15,7 +15,7 @@ direnv hook fish | source
 fixit init fish | source
 
 set -gx FZF_COMMON_OPTS "--walker-skip .git,node_modules,target"
-set -gx FZF_CTRL_T_OPTS "$FZF_COMMON_OPTS --preview 'fzf_preview {}'"
+set -gx FZF_CTRL_T_OPTS "$FZF_COMMON_OPTS --preview 'preview {}'"
 set -gx FZF_ALT_C_OPTS "$FZF_COMMON_OPTS"
 alias gb 'git branch | grep -v "^\*" | fzf --height=20% --reverse --info=inline | xargs git checkout'
 fzf --fish | source
