@@ -15,9 +15,15 @@ vim.g.mapleader = " " -- set the <leader> key to <space>
 vim.o.timeoutlen = 200 -- set the timeout before revealing prompts
 vim.o.smarttab = true -- autodetect tab mode
 vim.o.tabstop = 4 -- show tabs as four spaces
+vim.o.scrolloff = 10 -- keep the cursor n lines away from the screen edge when scrolling
 
 vim.o.title = true -- show title
 vim.o.titlestring = "nvim %r%f" -- format title as "nvim [RO]/path/to/file"
+
+vim.o.foldmethod = "expr"
+vim.o.foldexpr = "nvim_treesitter#foldexpr()" -- fold using treesitter
+vim.o.foldenable = false -- disable folds when opening a file
+vim.o.foldlevelstart = 99 -- a sufficiently large number to not fold everythin automatically
 
 vim.o.guifont = "Iosevka:h14" -- the font to use in GUI
 
@@ -87,6 +93,10 @@ require("lazy").setup({
     opts = {
       options = {
         diagnostics = "nvim_lsp",
+        diagnostics_indicator = function(count, level)
+          local icon = level:match("error") and "" or ""
+          return " " .. icon .. " " .. count
+        end,
         -- Show buffer numbers in the tabline. These are later used for <leader>[number]
         -- quick navigation.
         numbers = function(opts) return opts.ordinal end,
@@ -163,7 +173,6 @@ require("lazy").setup({
   {
     "lukas-reineke/indent-blankline.nvim",
     name = "ibl",
-    event = "VeryLazy",
     config = function() require("ibl").setup() end,
   },
 
@@ -180,12 +189,11 @@ require("lazy").setup({
     config = true,
   },
   -- git gutter and hunk manipulation
-  { "lewis6991/gitsigns.nvim", event = "VeryLazy", opts = {} },
+  { "lewis6991/gitsigns.nvim", opts = {} },
 
   -- tool management
   {
     "williamboman/mason.nvim",
-    event = "VeryLazy",
     opts = {
       ensure_installed = {
         "stylua",
@@ -208,7 +216,6 @@ require("lazy").setup({
   -- LSP setup
   {
     "williamboman/mason-lspconfig.nvim",
-    event = "VeryLazy",
     dependencies = {
       "williamboman/mason.nvim",
       "neovim/nvim-lspconfig",
@@ -313,7 +320,6 @@ require("lazy").setup({
   -- Project tree
   {
     "nvim-tree/nvim-tree.lua",
-    event = "VeryLazy",
     config = function()
       require("nvim-tree").setup({
         view = { width = 40 },
@@ -370,6 +376,7 @@ require("lazy").setup({
     opts = {},
     cmd = "Trouble",
   },
+  "ggandor/leap.nvim",
 
   -- Markdown preview
   {
@@ -395,6 +402,8 @@ local open_settings = {
   function() vim.cmd.edit(vim.fn.getenv("MYVIMRC")) end,
   "Open init.lua",
 }
+
+require("leap").create_default_mappings()
 
 -- format on save
 vim.api.nvim_create_autocmd("BufWritePre", {

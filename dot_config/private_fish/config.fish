@@ -8,7 +8,9 @@ if not functions -q fisher
 	echo "Fisher is not installed. Run `install-fisher`."
 end
 
-theme_gruvbox dark
+if status --is-interactive
+	theme_gruvbox dark
+end
 
 starship init fish | source
 direnv hook fish | source
