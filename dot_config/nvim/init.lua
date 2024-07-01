@@ -15,7 +15,7 @@ vim.g.mapleader = " " -- set the <leader> key to <space>
 vim.o.timeoutlen = 200 -- set the timeout before revealing prompts
 vim.o.smarttab = true -- autodetect tab mode
 vim.o.tabstop = 4 -- show tabs as four spaces
-vim.o.scrolloff = 10 -- keep the cursor n lines away from the screen edge when scrolling
+vim.o.scrolloff = 15 -- keep the cursor n lines away from the screen edge when scrolling
 
 vim.o.title = true -- show title
 vim.o.titlestring = "nvim %r%f" -- format title as "nvim [RO]/path/to/file"
@@ -25,7 +25,7 @@ vim.o.foldexpr = "nvim_treesitter#foldexpr()" -- fold using treesitter
 vim.o.foldenable = false -- disable folds when opening a file
 vim.o.foldlevelstart = 99 -- a sufficiently large number to not fold everythin automatically
 
-vim.o.guifont = "Iosevka:h14" -- the font to use in GUI
+vim.o.guifont = "IosevkaTerm Nerd Font:h14" -- the font to use in GUI
 
 -- Brewfiles are written in Ruby
 vim.filetype.add({
@@ -38,8 +38,6 @@ vim.lsp.inlay_hint.enable(true)
 
 -- settings specific to Neovide GUI client
 if vim.g.neovide then
-  -- this is completely unnecessary and slightly annoying with noice
-  vim.g.neovide_cursor_animate_command_line = false
   -- neovide starts with pwd == "/". $HOME is more practical
   vim.cmd.cd(vim.fn.environ()["HOME"])
 end
@@ -520,6 +518,10 @@ local mappings = {
       f = { telescope_builtin.find_files, "Find files" },
       g = { telescope_builtin.live_grep, "Find in project" },
       P = { "<Plug>MarkdownPreview", "Open markdown preview" },
+    },
+    p = {
+      "<cmd>Telescope projects<cr>",
+      "Recent projects",
     },
   },
 }
