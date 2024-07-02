@@ -1,9 +1,5 @@
 -- !!!! This configuration requires git and ripgrep
 
--- My devices sometimes do weird things with language settings due to having multiple
--- languages set up on them, so I just set the language explicitly.
-vim.cmd.language("en_US")
-
 -- basic options
 vim.o.number = true -- show line numbers
 vim.wo.relativenumber = true -- show relative numbers for quicker keyboard operations
