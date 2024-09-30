@@ -10,4 +10,5 @@ function portainer
 		-v portainer_data:/data \
 		--name portainer \
 		portainer/portainer
+	printf "Portainer is running on http://localhost:9000\n"
 end

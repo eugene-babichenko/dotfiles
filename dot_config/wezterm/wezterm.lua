@@ -20,8 +20,6 @@ config.window_frame = {
   font_size = 13,
 }
 
--- config.hide_tab_bar_if_only_one_tab = true
-
 local act = wezterm.action
 config.keys = {
   { key = "p", mods = "SUPER", action = act.PaneSelect({}) },

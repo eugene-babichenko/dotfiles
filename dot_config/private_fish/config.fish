@@ -1,13 +1,8 @@
 set -gx EDITOR nvim
-set -gx HOMEBREW_NO_AUTO_UPDATE 1
 set -g fish_greeting
 
 # Make GnuPG work correctly
 set -gx GPG_TTY (tty)
-
-if not functions -q fisher
-	echo "Fisher is not installed. Run `install-fisher`."
-end
 
 if status --is-interactive
 	theme_gruvbox dark
@@ -27,3 +22,8 @@ test -e $nix_profile ; and fenv "source $nix_profile"
 
 set -l iterm_shell_integration {$HOME}/.iterm2_shell_integration.fish
 test -e  $iterm_shell_integration ; and source $iterm_shell_integration
+
+set -gx PNPM_HOME "/Users/eugene/Library/pnpm"
+if not string match -q -- $PNPM_HOME $PATH
+  set -gx PATH "$PNPM_HOME" $PATH
+end
