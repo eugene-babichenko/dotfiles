@@ -28,6 +28,22 @@ vim.filetype.add({
 })
 
 vim.lsp.inlay_hint.enable(true)
+vim.fn.sign_define(
+  "DiagnosticSignError",
+  { text = " ", texthl = "DiagnosticSignError" }
+)
+vim.fn.sign_define(
+  "DiagnosticSignWarn",
+  { text = " ", texthl = "DiagnosticSignWarn" }
+)
+vim.fn.sign_define(
+  "DiagnosticSignInfo",
+  { text = "󰌵", texthl = "DiagnosticSignInfo" }
+)
+vim.fn.sign_define(
+  "DiagnosticSignHint",
+  { text = "󰌵", texthl = "DiagnosticSignHint" }
+)
 
 vim.o.guifont = "IosevkaTerm Nerd Font:h14" -- the font to use in GUI
 -- settings specific to Neovide GUI client
