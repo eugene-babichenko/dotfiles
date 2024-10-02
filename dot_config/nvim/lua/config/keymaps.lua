@@ -15,9 +15,15 @@ wk.add({
 
   { "[h", gitsigns.previous_hunk, desc = "Previous hunk" },
   { "[t", todo().jump_prev, desc = "Previous todo" },
+  {
+    "[d",
+    "<cmd>Lspsaga diagnostic_jump_prev<cr>",
+    desc = "Previous diagnostic",
+  },
 
   { "]h", gitsigns.next_hunk, desc = "Next hunk" },
   { "]t", todo().jump_next, desc = "Next todo" },
+  { "]d", "<cmd>Lspsaga diagnostic_jump_next<cr>", desc = "Next diagnostic" },
 
   { "<leader>?", wk.show, desc = "Show keybindings" },
 
@@ -81,13 +87,9 @@ wk.add({
     "<cmd>Telescope lsp_definitions<cr>",
     desc = "Go to definition",
   },
-  {
-    "<leader>lr",
-    "<cmd>Telescope lsp_references<cr>",
-    desc = "Show references",
-  },
+  { "<leader>lr", "<cmd>Lspsaga finder<cr>", desc = "Show references" },
   { "<leader>ln", vim.lsp.buf.rename, desc = "Rename symbol" },
-  { "<leader>la", vim.lsp.buf.code_action, desc = "Code actions" },
+  { "<leader>la", "<cmd>Lspsaga code_action<cr>", desc = "Code actions" },
   {
     "<leader>le",
     "<cmd>Trouble diagnostics toggle<cr>",
@@ -122,9 +124,8 @@ wk.add({
 for i = 1, 9 do
   wk.add({
     {
-      string.format("<leader>%s", i),
-      function() require("bufferline").go_to(i, true) end,
-      desc = string.format("Go to buffer %s", i),
+      string.format("%s", i),
+      string.format("<cmd>BufferGoto %s<cr>", i),
       hidden = true,
     },
   })

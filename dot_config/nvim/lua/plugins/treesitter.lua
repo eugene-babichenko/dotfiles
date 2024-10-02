@@ -25,6 +25,7 @@ return {
         "dockerfile",
         "fish",
         "typescript",
+        "sql",
       },
       highlight = {
         enable = true,

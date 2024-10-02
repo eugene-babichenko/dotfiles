@@ -34,9 +34,12 @@ return {
   dependencies = "nvim-tree/nvim-web-devicons",
   opts = {
     sections = {
-      lualine_b = { "branch", git_status, "diff", "diagnostics" },
+      lualine_b = { "branch", git_status, "diff" },
       lualine_c = {
-        { "filename", path = 1 },
+        {
+          "diagnostics",
+          sources = { "nvim_workspace_diagnostic" },
+        },
       },
       lualine_x = {
         require("lsp-progress").progress,

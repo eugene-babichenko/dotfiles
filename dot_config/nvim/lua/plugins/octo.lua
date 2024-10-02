@@ -5,6 +5,6 @@ return {
     "nvim-telescope/telescope.nvim",
     "nvim-tree/nvim-web-devicons",
   },
-  command = "Octo",
+  cmd = "Octo",
   config = function() require("octo").setup() end,
 }

@@ -11,6 +11,7 @@ vim.o.tabstop = 4 -- show tabs as four spaces
 vim.o.scrolloff = 15 -- keep the cursor n lines away from the screen edge when scrolling
 vim.o.completeopt = "menu,preview,menuone,noselect"
 vim.o.mousescroll = "ver:3,hor:0" -- disable horizontal scroll
+vim.o.signcolumn = "yes" -- show sign column to avoid text shifting
 
 vim.o.title = true -- show title
 vim.o.titlestring = "nvim %r%f" -- format title as "nvim [RO]/path/to/file"
@@ -28,22 +29,17 @@ vim.filetype.add({
 })
 
 vim.lsp.inlay_hint.enable(true)
-vim.fn.sign_define(
-  "DiagnosticSignError",
-  { text = " ", texthl = "DiagnosticSignError" }
-)
-vim.fn.sign_define(
-  "DiagnosticSignWarn",
-  { text = " ", texthl = "DiagnosticSignWarn" }
-)
-vim.fn.sign_define(
-  "DiagnosticSignInfo",
-  { text = "󰌵", texthl = "DiagnosticSignInfo" }
-)
-vim.fn.sign_define(
-  "DiagnosticSignHint",
-  { text = "󰌵", texthl = "DiagnosticSignHint" }
-)
+
+vim.diagnostic.config({
+  signs = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = " ",
+      [vim.diagnostic.severity.WARN] = " ",
+      [vim.diagnostic.severity.INFO] = "󰌵",
+      [vim.diagnostic.severity.HINT] = "󰌵",
+    },
+  },
+})
 
 vim.o.guifont = "IosevkaTerm Nerd Font:h14" -- the font to use in GUI
 -- settings specific to Neovide GUI client
