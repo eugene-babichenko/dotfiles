@@ -1,4 +1,1 @@
-return {
-  "ellisonleao/gruvbox.nvim",
-  config = true,
-}
+return { "ellisonleao/gruvbox.nvim" }

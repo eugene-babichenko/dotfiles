@@ -20,12 +20,21 @@ wk.add({
     "<cmd>Lspsaga diagnostic_jump_prev<cr>",
     desc = "Previous diagnostic",
   },
+  { "[b", "<cmd>BufferPrevious<cr>", desc = "Previous buffer" },
 
   { "]h", gitsigns.next_hunk, desc = "Next hunk" },
   { "]t", todo().jump_next, desc = "Next todo" },
   { "]d", "<cmd>Lspsaga diagnostic_jump_next<cr>", desc = "Next diagnostic" },
+  { "]b", "<cmd>BufferNext<cr>", desc = "Next buffer" },
 
   { "<leader>?", wk.show, desc = "Show keybindings" },
+
+  { "<leader>x", "<cmd>BufferClose<cr>", desc = "Close current buffer" },
+  {
+    "<leader>X",
+    "<cmd>BufferCloseAllButCurrent<cr>",
+    desc = "Close all buffers but current",
+  },
 
   { "<leader>s", group = "split" },
   { "<leader>sh", vim.cmd.split, desc = "New horizontal split" },
@@ -53,7 +62,7 @@ wk.add({
   },
 
   { "<leader>gp", "<cmd>Neogit pull<cr>", desc = "Pull from remote" },
-  { "<leader>gP", "<cmd>Neogit push<cr>", desc = "Pull from remote" },
+  { "<leader>gP", "<cmd>Neogit push<cr>", desc = "Push to remote" },
   { "<leader>gc", "<cmd>Neogit commit<cr>", desc = "Commit" },
 
   { "<leader>gs", group = "stash" },
@@ -117,16 +126,16 @@ wk.add({
 
   { "<leader>b", "<cmd>Telescope buffers<cr>", desc = "List buffers" },
 
-  { "<leader>L", "<cmd>Lazy<cr>", desc = "Oprn Lazy" },
+  { "<leader>L", "<cmd>Lazy<cr>", desc = "Open Lazy" },
 })
 
 -- quickly select buffers based on displayed numbers
 for i = 1, 9 do
   wk.add({
     {
-      string.format("%s", i),
+      string.format("<leader>%s", i),
       string.format("<cmd>BufferGoto %s<cr>", i),
-      hidden = true,
+      desc = string.format("Go to buffer %s", i),
     },
   })
 end

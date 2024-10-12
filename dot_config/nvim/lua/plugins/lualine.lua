@@ -33,8 +33,12 @@ return {
   "nvim-lualine/lualine.nvim",
   dependencies = "nvim-tree/nvim-web-devicons",
   opts = {
+    options = {
+      component_separators = "|",
+    },
     sections = {
-      lualine_b = { "branch", git_status, "diff" },
+      lualine_a = { "mode" },
+      lualine_b = { "branch", "diff", git_status },
       lualine_c = {
         {
           "diagnostics",
@@ -43,6 +47,8 @@ return {
       },
       lualine_x = {
         require("lsp-progress").progress,
+      },
+      lualine_y = {
         {
           require("lazy.status").updates,
           cond = require("lazy.status").has_updates,
@@ -51,7 +57,12 @@ return {
         "fileformat",
         "filetype",
       },
-      lualine_y = {},
+      lualine_z = {
+        {
+          "location",
+          left_padding = 2,
+        },
+      },
     },
   },
 }

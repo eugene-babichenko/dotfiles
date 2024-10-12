@@ -6,8 +6,6 @@ return {
   event = "VeryLazy",
   opts = {
     animation = false,
-    exclude_ft = {},
-    exclude_name = {},
     icons = {
       buffer_index = true,
       diagnostics = {
@@ -16,8 +14,11 @@ return {
         [vim.diagnostic.severity.INFO] = { enabled = true },
         [vim.diagnostic.severity.HINT] = { enabled = true },
       },
-      preset = "powerline",
+      separator = { left = "", right = "" },
+      alternate = { separator = { left = "", right = "" } },
+      current = { separator = { left = "", right = "" } },
+      inactive = { separator = { left = "", right = "" } },
+      visible = { separator = { left = "", right = "" } },
     },
-    insert_at_end = true,
   },
 }

@@ -4,12 +4,10 @@ return {
   event = "VeryLazy",
   dependencies = {
     "hrsh7th/cmp-nvim-lsp",
-    "hrsh7th/cmp-path",
-    { "L3MON4D3/LuaSnip", build = "make install_jsregexp" },
-    "saadparwaiz1/cmp_luasnip",
     "rafamadriz/friendly-snippets",
     "zbirenbaum/copilot.lua",
     "zbirenbaum/copilot-cmp",
+    "onsails/lspkind.nvim",
   },
   config = function()
     require("copilot").setup({
@@ -18,46 +16,63 @@ return {
       panel = { enabled = false },
     })
     require("copilot_cmp").setup()
-    require("luasnip.loaders.from_vscode").lazy_load()
+
     local cmp = require("cmp")
+
+    local next_item = cmp.mapping(
+      cmp.mapping.select_next_item({
+        behavior = cmp.SelectBehavior.Select,
+      }),
+      { "i", "s" }
+    )
+    local prev_item = cmp.mapping(
+      cmp.mapping.select_prev_item({
+        behavior = cmp.SelectBehavior.Select,
+      }),
+      { "i", "s" }
+    )
+
     cmp.setup({
       sources = {
         { name = "copilot" },
-        { name = "luasnip" },
         { name = "nvim_lsp" },
-        { name = "path" },
+      },
+      snippet = {
+        expand = function(args) vim.snippet.expand(args.body) end,
       },
       mapping = {
-        -- Navigation: Tab will move you down, you can use arrows for navigations.
-        ["<tab>"] = cmp.mapping(
-          cmp.mapping.select_next_item({
-            behavior = cmp.SelectBehavior.Select,
-          }),
-          { "i", "s" }
-        ),
-        ["<down>"] = cmp.mapping(
-          cmp.mapping.select_next_item({
-            behavior = cmp.SelectBehavior.Select,
-          }),
-          { "i", "s" }
-        ),
-        ["<S-Tab>"] = cmp.mapping(
-          cmp.mapping.select_prev_item({
-            behavior = cmp.SelectBehavior.Select,
-          }),
-          { "i", "s" }
-        ),
-        ["<up>"] = cmp.mapping(
-          cmp.mapping.select_prev_item({
-            behavior = cmp.SelectBehavior.Select,
-          }),
-          { "i", "s" }
-        ),
-        -- Confirm on Enter. Requires selection first.
+        ["<tab>"] = next_item,
+        ["<down>"] = next_item,
+        ["<S-Tab>"] = prev_item,
+        ["<up>"] = prev_item,
         ["<cr>"] = cmp.mapping.confirm({
-          behavior = cmp.ConfirmBehavior.Replace,
+          behavior = cmp.ConfirmBehavior.Insert,
           select = false,
         }),
+      },
+      preselect = cmp.PreselectMode.None,
+      formatting = {
+        format = require("lspkind").cmp_format({
+          symbol_map = {
+            Copilot = "",
+          },
+        }),
+      },
+      sorting = {
+        priority_weight = 2,
+        comparators = {
+          require("copilot_cmp.comparators").prioritize,
+          -- Below is the default comparator list and order for nvim-cmp
+          cmp.config.compare.offset,
+          cmp.config.compare.exact,
+          cmp.config.compare.score,
+          cmp.config.compare.recently_used,
+          cmp.config.compare.locality,
+          cmp.config.compare.kind,
+          cmp.config.compare.sort_text,
+          cmp.config.compare.length,
+          cmp.config.compare.order,
+        },
       },
     })
   end,
