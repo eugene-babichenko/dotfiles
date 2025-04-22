@@ -12,7 +12,7 @@ end
 fixit init fish | source
 fzf --fish | source
 
-set -gx FZF_CTRL_T_OPTS "--walker-skip .git,node_modules,target --preview 'fzf_preview {}'"
+set -gx FZF_CTRL_T_OPTS "--walker-skip .git,node_modules,target,.venv,.ruff_cache --preview 'fzf_preview {}'"
 
 source $HOME/.local/bin/env.fish
 
